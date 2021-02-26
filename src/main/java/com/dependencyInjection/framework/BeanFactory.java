@@ -7,6 +7,8 @@ import com.dependencyInjection.framework.module.Injector;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BeanFactory {
     private final Injector module;
@@ -24,21 +26,17 @@ public class BeanFactory {
 
     private Object injectFieldsIntoClass(final Class<?> classToInject)
             throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException{
-        int countConstructor = 0;
+        List<Constructor> listInjectConstructor = new ArrayList<>();
         for (Constructor<?> constructor : classToInject.getConstructors()) {
             if (constructor.isAnnotationPresent(Inject.class)) {
-                countConstructor++;
+                listInjectConstructor.add(constructor);
             }
         }
-        if (countConstructor > 1){
+        if (listInjectConstructor.size() > 1){
             return new TooManyConstructorsException();
         }
-        if (countConstructor == 1){
-            for (Constructor<?> constructor : classToInject.getConstructors()) {
-                if (constructor.isAnnotationPresent(Inject.class)){
-                    return injectFieldsViaConstructor(classToInject,constructor);
-                }
-            }
+        if (listInjectConstructor.size() == 1){
+            return injectFieldsViaConstructor(classToInject, listInjectConstructor.get(0));
         }
         return new ConstructorNotFoundException();
     }

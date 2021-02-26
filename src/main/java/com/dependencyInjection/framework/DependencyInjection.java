@@ -4,7 +4,7 @@ import com.dependencyInjection.framework.module.Injector;
 
 public final class DependencyInjection {
 
-    public DependencyInjection() {
+    private DependencyInjection() {
 
     }
 
