@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Abstract module to configure and retrieve proper dependency injection mapping.
+ *  Module to configure and retrieve proper dependency injection mapping.
  *
  *
  */
-public abstract class InjectorImpl implements Injector {
+public class InjectorImpl implements Injector {
 
     private final Map<Class<?>, Class<?>> classMap = new HashMap<>();
 

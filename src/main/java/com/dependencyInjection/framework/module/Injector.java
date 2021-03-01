@@ -6,7 +6,9 @@ package com.dependencyInjection.framework.module;
  */
 public interface Injector {
 
-    void configure();
+    default void configure() {
+
+    }
 
     <T> Class<? extends T> getProvider(Class<T> type);
 
